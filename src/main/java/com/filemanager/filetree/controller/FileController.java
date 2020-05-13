@@ -1,12 +1,12 @@
 package com.filemanager.filetree.controller;
 
 import com.filemanager.filetree.dto.FileDTO;
+import com.filemanager.filetree.dto.UpdateFileDTO;
 import com.filemanager.filetree.entity.File;
 import com.filemanager.filetree.mappers.FileMapper;
+import com.filemanager.filetree.mappers.UpdateFileMapper;
 import com.filemanager.filetree.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,11 +40,13 @@ public class FileController {
         return FileMapper.INSTANCE.toDTO(savedFile);
     }
 
+
     @RequestMapping(value = "updateNode")
-    public File updateFileById(
+    public UpdateFileDTO updateFileById(
             @RequestParam final Long id,
             @RequestBody final File fileToUpdate) {
-        return fileService.updateFileById(id, fileToUpdate);
+        File updatedFile = fileService.updateFileById(id, fileToUpdate);
+        return UpdateFileMapper.INSTANCE.toDTO(updatedFile);
     }
 
 
@@ -54,7 +56,6 @@ public class FileController {
             @RequestParam final Long id) {
         fileService.deleteFileById(id);
     }
-
-
+    
 
 }
