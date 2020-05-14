@@ -9,6 +9,7 @@ import com.filemanager.filetree.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -17,6 +18,10 @@ public class FileController {
 
     @Autowired
     private FileService fileService;
+
+
+private  FileMapper fileMapper;
+private  UpdateFileMapper updateFileMapper;
 
 
     @GetMapping()
@@ -30,15 +35,18 @@ public class FileController {
     public FileDTO getFileById(
             @PathVariable("id") final Long id) {
         File file = fileService.getFileById(id);
-        return FileMapper.INSTANCE.toDTO(file);
+        return fileMapper.INSTANCE.toDTO(file);
     }
+
 
     @PostMapping()
     public FileDTO saveFile(
             @RequestBody final File file) {
         File savedFile = fileService.saveFile(file);
-        return FileMapper.INSTANCE.toDTO(savedFile);
+        return fileMapper.INSTANCE.toDTO(savedFile);
     }
+
+
 
 
     @RequestMapping(value = "updateNode")
@@ -46,8 +54,9 @@ public class FileController {
             @RequestParam final Long id,
             @RequestBody final File fileToUpdate) {
         File updatedFile = fileService.updateFileById(id, fileToUpdate);
-        return UpdateFileMapper.INSTANCE.toDTO(updatedFile);
+        return updateFileMapper.INSTANCE.toDTO(updatedFile);
     }
+
 
 
     @PostMapping(path = "deleteNode")
@@ -56,6 +65,6 @@ public class FileController {
             @RequestParam final Long id) {
         fileService.deleteFileById(id);
     }
-    
+
 
 }

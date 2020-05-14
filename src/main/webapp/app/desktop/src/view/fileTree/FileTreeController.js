@@ -37,7 +37,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             href: '',
             glyph: '',
             name: nameNode,
-            groupId: ''
+            groupId: '',
         };
 
         Ext.Date.patterns = {

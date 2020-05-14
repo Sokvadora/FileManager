@@ -9,7 +9,8 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
         let selectedFileAtr = Ext.StoreMgr.lookup("fileStore").findExact('name', selectedFileName);
         let fileFromStore = Ext.getStore('fileStore').getAt(selectedFileAtr);
         let fileId = fileFromStore.get('id')
-        let fileToUpdate = frm.getForm().getValues();
+       let fileToUpdate = frm.getForm().getValues();
+
 
         Ext.Ajax.request({
             url: 'file/updateNode',

@@ -1,5 +1,9 @@
 package com.filemanager.filetree.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,4 +25,14 @@ public class FileDTO {
     private String size;
     private String parentId;
     private String author;
+
+    @JsonIgnore
+    private String createdAt ;
+
+    @JsonIgnore
+    private String editedAt;
+
+
+
+
 }

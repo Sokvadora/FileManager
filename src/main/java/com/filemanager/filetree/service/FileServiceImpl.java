@@ -1,6 +1,8 @@
 package com.filemanager.filetree.service;
 
+import com.filemanager.filetree.dto.FileDTO;
 import com.filemanager.filetree.entity.File;
+import com.filemanager.filetree.mappers.FileMapper;
 import com.filemanager.filetree.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private FileRepository fileRepository;
 
+    private FileMapper fileMapper;
+
+
     @Override
     public List<File> getAllFiles() {
         return (List<File>) fileRepository.findAll();
@@ -22,10 +27,15 @@ public class FileServiceImpl implements FileService {
         return fileRepository.findById(id).get();
     }
 
+
+
     @Override
     public File saveFile(final File file) {
         return fileRepository.save(file);
     }
+
+
+
 
     @Override
     public File updateFileById(
@@ -35,6 +45,8 @@ public class FileServiceImpl implements FileService {
         fileFromDb.setName(fileToUpdate.getName());
         fileFromDb.setInfo(fileToUpdate.getInfo());
         fileFromDb.setAuthor(fileToUpdate.getAuthor());
+
+        fileFromDb.setEditedAt(fileToUpdate.getEditedAt());
         return fileRepository.save(fileFromDb);
     }
 
