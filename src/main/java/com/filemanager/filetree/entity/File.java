@@ -73,15 +73,12 @@ public class File implements Serializable {
     @Column(name = "author")
     private String author;
 
-
-
     @NotNull
     private String createdAt;
-            //= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
     @NotNull
     private String editedAt;
-    //= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+
 
 
 
