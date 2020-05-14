@@ -17,10 +17,11 @@ public class FileServiceImpl implements FileService {
     private FileMapper fileMapper;
 
 
-    @Override
     public List<File> getAllFiles() {
         return (List<File>) fileRepository.findAll();
     }
+
+
 
     @Override
     public File getFileById(final Long id) {
@@ -29,13 +30,16 @@ public class FileServiceImpl implements FileService {
 
 
 
+//    @Override
+//    public File saveFile(final File file) {
+//        return fileRepository.save(file);
+//    }
+
+
     @Override
     public File saveFile(final File file) {
         return fileRepository.save(file);
     }
-
-
-
 
     @Override
     public File updateFileById(

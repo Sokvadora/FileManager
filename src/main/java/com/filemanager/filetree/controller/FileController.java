@@ -7,10 +7,14 @@ import com.filemanager.filetree.mappers.FileMapper;
 import com.filemanager.filetree.mappers.UpdateFileMapper;
 import com.filemanager.filetree.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/file")
@@ -20,43 +24,40 @@ public class FileController {
     private FileService fileService;
 
 
-private  FileMapper fileMapper;
-private  UpdateFileMapper updateFileMapper;
+    private FileMapper fileMapper;
+    private UpdateFileMapper updateFileMapper;
 
 
     @GetMapping()
-    public List<File> getAllFiles() {
-        List<File> fileList = fileService.getAllFiles();
-        return fileList;
+    public ResponseEntity<List<FileDTO>> getAllFiles() {
+        return ResponseEntity.ok(fileMapper.INSTANCE.toFileDTOs(fileService.getAllFiles()));
     }
 
 
     @GetMapping("/{id}")
     public FileDTO getFileById(
             @PathVariable("id") final Long id) {
-        File file = fileService.getFileById(id);
-        return fileMapper.INSTANCE.toDTO(file);
+        Optional<File> file = Optional.ofNullable(fileService.getFileById(id));
+        return fileMapper.INSTANCE.toDTO(file.get());
     }
 
 
     @PostMapping()
-    public FileDTO saveFile(
-            @RequestBody final File file) {
-        File savedFile = fileService.saveFile(file);
-        return fileMapper.INSTANCE.toDTO(savedFile);
+    public ResponseEntity<FileDTO> saveFile(
+            @RequestBody FileDTO fileDTO) {
+        fileService.saveFile(fileMapper.INSTANCE.toFile(fileDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(fileDTO);
     }
-
-
 
 
     @RequestMapping(value = "updateNode")
     public UpdateFileDTO updateFileById(
             @RequestParam final Long id,
-            @RequestBody final File fileToUpdate) {
-        File updatedFile = fileService.updateFileById(id, fileToUpdate);
-        return updateFileMapper.INSTANCE.toDTO(updatedFile);
+            @RequestBody UpdateFileDTO updateFileDTO) {
+        File file = updateFileMapper.INSTANCE.toUpdateFile(updateFileDTO);
+        fileService.updateFileById(id, file);
+        return updateFileDTO;
     }
-
 
 
     @PostMapping(path = "deleteNode")
@@ -65,6 +66,5 @@ private  UpdateFileMapper updateFileMapper;
             @RequestParam final Long id) {
         fileService.deleteFileById(id);
     }
-
 
 }

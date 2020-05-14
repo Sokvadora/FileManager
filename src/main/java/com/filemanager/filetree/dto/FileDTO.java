@@ -3,7 +3,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 @Getter
 @Setter
@@ -27,10 +29,10 @@ public class FileDTO {
     private String author;
 
     @JsonIgnore
-    private String createdAt ;
+    private String createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
     @JsonIgnore
-    private String editedAt;
+    private String editedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
 
 
