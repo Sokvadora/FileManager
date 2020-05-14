@@ -29,8 +29,8 @@ public class FileController {
 
 
     @GetMapping()
-    public ResponseEntity<List<FileDTO>> getAllFiles() {
-        return ResponseEntity.ok(fileMapper.INSTANCE.toFileDTOs(fileService.getAllFiles()));
+    public List<FileDTO> getAllFiles() {
+        return fileMapper.INSTANCE.toFileDTOs(fileService.getAllFiles());
     }
 
 
@@ -43,10 +43,10 @@ public class FileController {
 
 
     @PostMapping()
-    public ResponseEntity<FileDTO> saveFile(
+    public FileDTO saveFile(
             @RequestBody FileDTO fileDTO) {
         fileService.saveFile(fileMapper.INSTANCE.toFile(fileDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(fileDTO);
+        return fileDTO;
     }
 
 
