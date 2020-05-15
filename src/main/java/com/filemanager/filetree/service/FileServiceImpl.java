@@ -41,6 +41,7 @@ public class FileServiceImpl implements FileService {
         return fileRepository.save(file);
     }
 
+
     @Override
     public File updateFileById(
             final Long id, final File fileToUpdate) {
@@ -49,7 +50,6 @@ public class FileServiceImpl implements FileService {
         fileFromDb.setName(fileToUpdate.getName());
         fileFromDb.setInfo(fileToUpdate.getInfo());
         fileFromDb.setAuthor(fileToUpdate.getAuthor());
-
         fileFromDb.setEditedAt(fileToUpdate.getEditedAt());
         return fileRepository.save(fileFromDb);
     }

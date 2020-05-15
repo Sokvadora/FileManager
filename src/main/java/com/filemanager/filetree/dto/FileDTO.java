@@ -1,11 +1,13 @@
 package com.filemanager.filetree.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.filemanager.filetree.entity.File;
-import com.sun.istack.NotNull;
+
 import lombok.*;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -30,14 +32,17 @@ public class FileDTO {
     private String parentId;
     private String author;
     private Set<File> children;
-    
-    @JsonIgnore
-    private String createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-
-    @JsonIgnore
-    private String editedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
 
+
+   // @JsonIgnore
+    private String createdAt = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+            .format(Calendar.getInstance().getTime());
+
+
+   // @JsonIgnore
+    private String editedAt = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+           .format(Calendar.getInstance().getTime());
 
 
 }

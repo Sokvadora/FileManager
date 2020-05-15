@@ -7,7 +7,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
     bodyPadding: 5,
     scrollable: true,
     width: 458,
-    height: 400,
+    height: 385,
 
     fieldDefaults: {
         labelAlign: "right",

@@ -9,7 +9,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
     controller: 'FileTreeController',
     rootVisible: true,
     width: 500,
-    height: 600,
+    height: 450,
     reserveScrollbar: true,
     viewConfig: {
         plugins:
@@ -32,15 +32,16 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         sortable: true,
         dataIndex: 'fileType',
     },
+
         {
-            text: 'Date',
-            dataIndex: 'fdate',
-            width: 100,
+            text: 'Last update',
+            dataIndex: 'editedAt',
+            width: 120,
         },
         {
             text: 'Size',
             dataIndex: 'size',
-            width: 100,
+            width: 80,
         }
     ],
 

@@ -18,5 +18,6 @@ public class UpdateFileDTO {
     private String author;
 
     @JsonIgnore
-    private String editedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+    private String editedAt = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+            .format(Calendar.getInstance().getTime());
 }

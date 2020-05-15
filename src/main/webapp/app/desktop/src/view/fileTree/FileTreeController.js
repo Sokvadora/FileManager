@@ -30,21 +30,16 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let node = {
             mtype: '',
             leaf: '',
-            fdate: '',
             parentId: '',
             infoNode: '',
             fileType: '',
             href: '',
             glyph: '',
             name: nameNode,
-            groupId: '',
+            size: ''
         };
 
-        Ext.Date.patterns = {
-            ShortDate: "d.m.Y"
-        };
 
-        node.fdate = Ext.Date.format(currentDate, Ext.Date.patterns.ShortDate);
 
         if (nameNode) {
 
@@ -94,6 +89,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             node.fileType = 'file';
             node.href = '';
             node.glyph = '';
+            node.size = Math.floor((Math.random() * 100) + 1) + 'MB';
         } else if (selectedType === 'Link') {
             node.leaf = true;
             node.mtype = 'Href';

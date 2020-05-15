@@ -1,22 +1,19 @@
 package com.filemanager.filetree.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.*;
+
+
 
 /**
  * File Entity Class.
@@ -43,14 +40,9 @@ public class File implements Serializable {
     @Column(name = "leaf")
     private Boolean leaf;
 
-    @Column(name = "groupId")
-    private String groupId;
 
     @Column(name = "info")
     private String info;
-
-    @Column(name = "fdate")
-    private String fdate;
 
     @Column(name = "fileType")
     private String fileType;
@@ -73,14 +65,18 @@ public class File implements Serializable {
     @Column(name = "author")
     private String author;
 
+//    @NotNull
+//    private String createdAt;
+//
+//    @NotNull
+//    private String editedAt;
+
+
     @NotNull
     private String createdAt;
 
     @NotNull
     private String editedAt;
-
-
-
 
 
 //    public Long getId() {
