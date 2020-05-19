@@ -47,7 +47,10 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
 
     selModel: {
         allowDeselect: true,
-        onKeyEnter: 'panelOnKeyEnter'
+        onKeyEnter: 'panelOnKeyEnter',
+        listeners: {
+            selectionchange: 'onSelectionChange',
+        },
     },
 
     bbar: [{

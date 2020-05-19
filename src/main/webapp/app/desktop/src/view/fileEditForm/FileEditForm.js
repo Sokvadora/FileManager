@@ -2,6 +2,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
     requires: ['MeExtApp.view.fileEditForm.FileEditFormController'],
     extend: 'Ext.form.Panel',
     xtype: 'fileEditForm',
+    itemId: 'fileEditForm',
     controller: 'FileEditFormController',
     frame: true,
     bodyPadding: 5,
@@ -41,12 +42,20 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 height: 170,
             },
             {
-                allowBlank: false, fieldLabel: 'Name', name: 'name', emptyText: 'name file', bind: {
+                allowBlank: false,
+                itemId: 'infoName',
+                fieldLabel: 'Name',
+                name: 'name',
+                emptyText: 'name file',
+                bind: {
                     emptyText: '{fileTree.selection.name}',
                 }
             },
             {
-                fieldLabel: 'Author', name: 'author', emptyText: 'name author',
+                fieldLabel: 'Author',
+                itemId: 'infoAuthor',
+                name: 'author',
+                emptyText: 'name author',
                 bind: {
                     emptyText: '{fileTree.selection.author}',
                 }
@@ -57,6 +66,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
 
     buttons: [{
         text: 'Update',
+        itemId: 'update-btn',
         disabled: true,
         formBind: true,
         handler: 'updateNode'

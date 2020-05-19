@@ -16,30 +16,6 @@ Ext.define('MeExtApp.view.main.MainViewController', {
         vm.bind("", me.setCenterViewXtype, me);
     },
 
-    updateCenterViewXtype: function (menuItem) {
-        if (!menuItem) return;
-        var data = menuItem.data;
-        if (!Ext.ClassManager.getByAlias("widget." + data.xtype)) {
-            console.log(xtype + " does not exist");
-            return;
-        }
-
-        var centerview = this.lookup("centerview");
-
-        // Lazily add the view to the center container.
-        var child = centerview.getComponent(data.xtype) || centerview.add({
-            xtype: data.xtype,
-            itemId: data.xtype,
-            heading: data.text
-        });
-
-        centerview.setActiveItem(child);
-
-        this.redirectTo(data.xtype);
-
-        this.getViewModel().set("menuItem", menuItem);
-        this.getViewModel().set("heading", data.text);
-    },
 
     routes: {
         ':xtype': {action: 'mainRoute'}
@@ -69,67 +45,5 @@ Ext.define('MeExtApp.view.main.MainViewController', {
         vm.set('heading', node.get('text'));
     },
 
-    onMenuViewSelectionChange: function (tree, node) {
-        if (node == null) {
-            return
-        }
-        var vm = this.getViewModel();
-        if (node.get('xtype') != undefined) {
-            this.redirectTo(node.get('xtype'));
-        }
-    },
-
-    onHeaderViewNavToggle: function () {
-        var vm = this.getViewModel();
-        vm.set('navCollapsed', !vm.get('navCollapsed'));
-        //var topPic = this.lookup('topPic');
-        var topPic = Ext.getCmp('topPic');
-        if (vm.get('navCollapsed') == true) {
-            topPic.setData({
-                src: 'resources/desktop/5.jpg',
-                caption: 'John Smith',
-                imgStyle: 'imgSmall',
-                height: '100px'
-            });
-        } else {
-            topPic.setData({
-                src: 'resources/desktop/5.jpg',
-                caption: 'John Smith',
-                imgStyle: 'imgBig',
-                height: '150px'
-            });
-        }
-
-    },
-
-    onHeaderViewDetailToggle: function () {
-        var vm = this.getViewModel();
-        vm.set('detailCollapsed', !vm.get('detailCollapsed'));
-        var detailtoggle = this.lookup('detailtoggle');
-        if (vm.get('detailCollapsed') === true) {
-            //detailtoggle.setType('prev')
-            detailtoggle.setIconCls('x-fa fa-arrow-left')
-        } else {
-            //detailtoggle.setType('next')
-            detailtoggle.setIconCls('x-fa fa-arrow-right')
-        }
-    },
-
-    onToolButtonClicked: function (button) {
-        Ext.Msg.show({
-            title: 'Tool Button',
-            closable: false,
-            message: button.name + ' tool button was clicked',
-            buttons: Ext.Msg.OK,
-            icon: Ext.Msg.INFO,
-            fn: function (btn) {
-                if (btn === 'ok') {
-                    console.log('ok pressed');
-                } else {
-                    console.log('??? pressed');
-                }
-            }
-        })
-    }
 
 });

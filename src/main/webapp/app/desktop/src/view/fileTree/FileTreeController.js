@@ -40,7 +40,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         };
 
 
-
         if (nameNode) {
 
             if (!panel.getRootNode().findChild('name', nameNode)) {
@@ -101,11 +100,12 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
     },
 
 
-    //
-    // selectionchange: function (selModel, selection) {
-    //     let panel = selModel.view.up('');
-    //     panel.onSelectionChange.apply(panel, arguments);
-    // },
+    selectionchange: function (selModel, selection) {
+        let panel = selModel.view.up('');
+        panel.onSelectionChange.apply(panel, arguments);
+
+
+    },
 
     panelOnKeyEnter: function () {
         let panel = this.view.up('');
@@ -146,5 +146,43 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             toolbar.enable();
         });
     },
+
+
+    onSelectionChange: function (selModel, selection) {
+        let panel = selModel.view.up('');
+        let buttonAdd = panel.down('#add-button');
+        let fileInfoEditForm = Ext.ComponentQuery.query("#fileEditForm")[0];
+        let selectedNode;
+
+        buttonAdd.enable()
+
+        if (selection.length) {
+            selectedNode = selection[0];
+            
+            if (selectedNode.data.fileType === 'file') {
+                buttonAdd.disable()
+                fileInfoEditForm.down('#infoTextarea').enable()
+
+            } else if (selectedNode.data.fileType === 'link') {
+                buttonAdd.disable()
+                fileInfoEditForm.down('#infoTextarea').disable()
+
+            } else if (selectedNode.data.fileType === 'folder') {
+                buttonAdd.enable()
+                fileInfoEditForm.down('#infoTextarea').disable()
+                fileInfoEditForm.down('#update-btn').disable()
+                fileInfoEditForm.down('#infoName').enable()
+                fileInfoEditForm.down('#infoAuthor').enable()
+
+            } else if (selectedNode.data.root === 'true') {
+                buttonAdd.enable()
+                fileInfoEditForm.down('#infoTextarea').disable()
+                fileInfoEditForm.down('#infoName').disable()
+                fileInfoEditForm.down('#infoAuthor').disable()
+                fileInfoEditForm.down('#update-btn').disable()
+            }
+        }
+    },
+
 
 })
