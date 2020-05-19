@@ -69,6 +69,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
             reference: 'fileType',
             displayField: 'name',
             valueField: 'name',
+            value: 'Folder',
             queryMode: 'local',
             store: {
                 fields: ['name'],

@@ -158,7 +158,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
         if (selection.length) {
             selectedNode = selection[0];
-            
+
             if (selectedNode.data.fileType === 'file') {
                 buttonAdd.disable()
                 fileInfoEditForm.down('#infoTextarea').enable()
