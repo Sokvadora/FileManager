@@ -15,7 +15,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
             url: 'file/updateNode',
             method: 'POST',
             params: {id: fileId},
-            jsonData:updateFileDTO,
+            jsonData: updateFileDTO,
             success: function (resp) {
                 let store = Ext.getStore('fileStore')
                 store.reload();

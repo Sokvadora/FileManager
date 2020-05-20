@@ -26,7 +26,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let inputTextField = panel.down('#new-name');
         let target = panel.selModel.getSelection()[0] || panel.getRootNode();
         let nameNode = inputTextField.getValue();
-        let currentDate = new Date();
 
         let node = {
             mtype: '',
@@ -52,7 +51,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
             let obj = Ext.JSON.encode(node);
 
-
             Ext.Ajax.request({
                 url: 'file',
                 method: 'POST',
@@ -67,7 +65,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                     console.log('Error');
                 }
             });
-
 
         }
     },
@@ -191,24 +188,24 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
     changeParentId: function (node, data, overModel, dropPosition) {
 
-        let curentParentId;
+        let currentParentId;
         let newParams = new Object();
-        let curentFileId = data.records[0].data.id;
+        let currentFileId = data.records[0].data.id;
         let isRoot = data.records[0].parentNode.data.root;
 
         if (isRoot === false) {
-            curentParentId = data.records[0].data.parentId;
-            newParams = {parentId: curentParentId};
+            currentParentId = data.records[0].data.parentId;
+            newParams = {parentId: currentParentId};
         }
 
         let droppedFileDTO = Ext.JSON.encode(newParams);
 
-        console.log('id:', curentFileId, 'parent:', curentParentId)
+        console.log('id:', currentFileId, 'parent:', currentParentId)
 
         Ext.Ajax.request({
             url: 'file/droppedNode',
             method: 'POST',
-            params: {id: curentFileId},
+            params: {id: currentFileId},
             jsonData: droppedFileDTO,
             success: function (resp) {
                 let store = Ext.getStore('fileStore')
@@ -221,6 +218,5 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         });
 
     },
-
 
 })

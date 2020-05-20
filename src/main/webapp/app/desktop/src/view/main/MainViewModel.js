@@ -6,6 +6,7 @@ Ext.define('MeExtApp.view.main.MainViewModel', {
         treeStore: {
             storeId: 'fileStore',
             type: 'tree',
+
             proxy: {
                 type: 'ajax',
                 reader: {
@@ -14,13 +15,14 @@ Ext.define('MeExtApp.view.main.MainViewModel', {
                 },
                 url: '/file'
             },
+
             parentIdProperty: 'parentId',
             autoLoad: true,
             //autoSync: true,
             root: {
                 id: 0,
                 expanded: false
-            }
+            },
         }
     }
 });

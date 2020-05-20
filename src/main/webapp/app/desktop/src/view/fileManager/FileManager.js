@@ -4,7 +4,7 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
     title: 'File manager',
     frame: true,
     width: 960,
-   // height: 670,
+    // height: 670,
     layout: 'column',
     items: [
         {xtype: 'fileTree'},

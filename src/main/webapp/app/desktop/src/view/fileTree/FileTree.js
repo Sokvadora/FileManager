@@ -120,7 +120,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
     },
 
     listeners: {
-        drop:  'changeParentId',
+        drop: 'changeParentId',
 
     }
 });
