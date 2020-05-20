@@ -1,6 +1,6 @@
 package com.filemanager.filetree.service;
 
-import com.filemanager.filetree.dto.FileDTO;
+
 import com.filemanager.filetree.entity.File;
 import com.filemanager.filetree.mappers.FileMapper;
 import com.filemanager.filetree.repository.FileRepository;
@@ -22,18 +22,10 @@ public class FileServiceImpl implements FileService {
     }
 
 
-
     @Override
     public File getFileById(final Long id) {
         return fileRepository.findById(id).get();
     }
-
-
-
-//    @Override
-//    public File saveFile(final File file) {
-//        return fileRepository.save(file);
-//    }
 
 
     @Override
@@ -51,6 +43,7 @@ public class FileServiceImpl implements FileService {
         fileFromDb.setInfo(fileToUpdate.getInfo());
         fileFromDb.setAuthor(fileToUpdate.getAuthor());
         fileFromDb.setEditedAt(fileToUpdate.getEditedAt());
+
         return fileRepository.save(fileFromDb);
     }
 
@@ -59,4 +52,20 @@ public class FileServiceImpl implements FileService {
         fileRepository.deleteById(id);
     }
 
+
+    @Override
+    public File updateFileByParentId(
+            final Long id, final File fileToUpdate) {
+        // Fetch the File from db
+        File fileFromDb = fileRepository.findById(id).get();
+        fileFromDb.setParentId(fileToUpdate.getParentId());
+
+        return fileRepository.save(fileFromDb);
+    }
+
+
 }
+
+
+
+

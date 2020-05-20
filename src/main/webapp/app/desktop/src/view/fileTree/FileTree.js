@@ -11,11 +11,16 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
     width: 500,
     height: 450,
     reserveScrollbar: true,
+
+
     viewConfig: {
+        markDirty: false,
+        id: 'configDataPanelsView',
         plugins:
             {
                 ptype: 'treeviewdragdrop',
-                containerScroll: true
+                containerScroll: true,
+
             }
     },
 
@@ -113,4 +118,9 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
             handler: 'onCollapseAllClick'
         }]
     },
+
+    listeners: {
+        drop:  'changeParentId',
+
+    }
 });

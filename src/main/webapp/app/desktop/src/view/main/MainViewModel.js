@@ -16,9 +16,10 @@ Ext.define('MeExtApp.view.main.MainViewModel', {
             },
             parentIdProperty: 'parentId',
             autoLoad: true,
+            //autoSync: true,
             root: {
-                id: '0',
-                expanded: true
+                id: 0,
+                expanded: false
             }
         }
     }

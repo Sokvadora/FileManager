@@ -1,8 +1,10 @@
 package com.filemanager.filetree.controller;
 
+import com.filemanager.filetree.dto.DroppedFileDTO;
 import com.filemanager.filetree.dto.FileDTO;
 import com.filemanager.filetree.dto.UpdateFileDTO;
 import com.filemanager.filetree.entity.File;
+import com.filemanager.filetree.mappers.DroppedFileMapper;
 import com.filemanager.filetree.mappers.FileMapper;
 import com.filemanager.filetree.mappers.UpdateFileMapper;
 import com.filemanager.filetree.service.FileService;
@@ -26,7 +28,7 @@ public class FileController {
 
     private FileMapper fileMapper;
     private UpdateFileMapper updateFileMapper;
-
+    private DroppedFileMapper droppedFileMapper;
 
     @GetMapping()
     public List<FileDTO> getAllFiles() {
@@ -66,5 +68,16 @@ public class FileController {
             @RequestParam final Long id) {
         fileService.deleteFileById(id);
     }
+
+
+    @RequestMapping(value = "droppedNode")
+    public DroppedFileDTO updateFileByParentId(
+            @RequestParam final Long id,
+            @RequestBody DroppedFileDTO droppedFileDTO) {
+        File file = droppedFileMapper.INSTANCE.toDroppedFile(droppedFileDTO);
+        fileService.updateFileByParentId(id, file);
+        return droppedFileDTO;
+    }
+
 
 }

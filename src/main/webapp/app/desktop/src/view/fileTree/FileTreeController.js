@@ -18,6 +18,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                 console.log('Error');
             }
         });
+
     },
 
     addButtonClick: function (button) {
@@ -51,20 +52,23 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
             let obj = Ext.JSON.encode(node);
 
+
             Ext.Ajax.request({
                 url: 'file',
                 method: 'POST',
                 jsonData: obj,
                 success: function () {
                     let store = panel.getStore();
-                    store.reload();
                     console.log('ok')
                     inputTextField.reset();
+                    store.reload();
                 },
                 failure: function () {
                     console.log('Error');
                 }
             });
+
+
         }
     },
 
@@ -182,6 +186,40 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                 fileInfoEditForm.down('#update-btn').disable()
             }
         }
+    },
+
+
+    changeParentId: function (node, data, overModel, dropPosition) {
+
+        let curentParentId;
+        let newParams = new Object();
+        let curentFileId = data.records[0].data.id;
+        let isRoot = data.records[0].parentNode.data.root;
+
+        if (isRoot === false) {
+            curentParentId = data.records[0].data.parentId;
+            newParams = {parentId: curentParentId};
+        }
+
+        let droppedFileDTO = Ext.JSON.encode(newParams);
+
+        console.log('id:', curentFileId, 'parent:', curentParentId)
+
+        Ext.Ajax.request({
+            url: 'file/droppedNode',
+            method: 'POST',
+            params: {id: curentFileId},
+            jsonData: droppedFileDTO,
+            success: function (resp) {
+                let store = Ext.getStore('fileStore')
+                store.reload();
+                console.log(resp)
+            },
+            failure: function (resp) {
+                console.log(resp.responseText);
+            }
+        });
+
     },
 
 
