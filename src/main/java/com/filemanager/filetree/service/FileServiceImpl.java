@@ -42,6 +42,7 @@ public class FileServiceImpl implements FileService {
         fileFromDb.setName(fileToUpdate.getName());
         fileFromDb.setInfo(fileToUpdate.getInfo());
         fileFromDb.setAuthor(fileToUpdate.getAuthor());
+        fileFromDb.setHref(fileToUpdate.getHref());
         fileFromDb.setEditedAt(fileToUpdate.getEditedAt());
 
         return fileRepository.save(fileFromDb);

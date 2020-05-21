@@ -16,18 +16,20 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
             items: [{
                 xtype: 'panel',
                 layout: 'column',
-                width: 500,
-                height: 400,
+                width: 457,
+                height: 390,
                 items: [
                     {xtype: 'fileEditForm'},
                 ]
             },
                 {
                     xtype: 'panel',
-                    width: 450,
-                    height: 300,
+                    width: 457,
+                    height: 60,
+
+
                     bind: {
-                        html: '<table style="width:100%">\n' +
+                        html: '<table>\n' +
                             '  <tr>\n' +
                             '    <th> Name</th>\n' +
                             '    <th>Type</th>\n' +
@@ -36,7 +38,7 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                             '    <th>Size</th>\n' +
                             '    <th>Author</th>\n' +
                             '  </tr>\n' +
-                            '  <tr style="background-color: #dddddd">\n' +
+                            '  <tr >\n' +
                             '    <td>{fileTree.selection.name}</td>\n' +
                             '    <td>{fileTree.selection.fileType}</td>\n' +
                             '    <td>{fileTree.selection.createdAt}</td>\n' +
@@ -44,7 +46,6 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                             '    <td>{fileTree.selection.size}</td>\n' +
                             '    <td>{fileTree.selection.author}</td>\n' +
                             '  </tr>\n' +
-                            '   \n' +
                             '</table>',
                     }
                 }

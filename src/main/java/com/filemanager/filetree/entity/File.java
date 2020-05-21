@@ -38,7 +38,7 @@ public class File implements Serializable {
     private Boolean leaf;
 
 
-    @Column(name = "info")
+   @Column(name = "info", length = 500)
     private String info;
 
     @Column(name = "fileType")

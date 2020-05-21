@@ -64,6 +64,8 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         name: 'nameNode',
         enableKeyEvents: true,
         width: 100,
+        maskRe: /[^\s*$]/,
+        allowBlank: false,
         listeners: {
             keydown: 'bbarKeydown'
         }

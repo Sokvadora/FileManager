@@ -12,9 +12,10 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
 
     fieldDefaults: {
         labelAlign: "right",
-        labelWidth: 115,
-        msgTarget: 'side'
+        labelWidth: 50,
+        msgTarget: 'side',
     },
+
 
     items: [{
         xtype: 'fieldset',
@@ -25,7 +26,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
         },
         defaultType: 'textfield',
         defaults: {
-            anchor: '100%'
+            anchor: '100%',
         },
 
         items: [
@@ -35,8 +36,10 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 fieldLabel: 'Info',
                 name: 'info',
                 emptyText: 'Select the file to view the information',
+                maxLength: 500,
                 bind: {
                     emptyText: '{fileTree.selection.info}',
+                    value: '{fileTree.selection.info}'
                 },
                 width: 50,
                 height: 170,
@@ -47,8 +50,9 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 fieldLabel: 'Name',
                 name: 'name',
                 emptyText: 'name file',
+                maskRe: /[^\s*$]/,
                 bind: {
-                    emptyText: '{fileTree.selection.name}',
+                    emptyText: '{fileTree.selection.name}'
                 }
             },
             {
