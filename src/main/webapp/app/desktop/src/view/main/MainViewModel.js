@@ -25,4 +25,5 @@ Ext.define('MeExtApp.view.main.MainViewModel', {
             },
         }
     }
+
 });

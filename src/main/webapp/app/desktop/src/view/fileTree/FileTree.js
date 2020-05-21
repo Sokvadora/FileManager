@@ -41,7 +41,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         {
             text: 'Last update',
             dataIndex: 'editedAt',
-            width: 120,
+            width: 130,
         },
         {
             text: 'Size',
@@ -123,6 +123,9 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
 
     listeners: {
         drop: 'changeParentId',
-
+        // load: function (aa) {
+        //     console.log(this.lookupViewModel())
+        //
+        // }
     }
 });

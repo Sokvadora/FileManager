@@ -27,7 +27,6 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                     width: 457,
                     height: 60,
 
-
                     bind: {
                         html: '<table>\n' +
                             '  <tr>\n' +
