@@ -33,7 +33,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
 
     }, {
         text: 'Type',
-        width: 100,
+        width: 90,
         sortable: true,
         dataIndex: 'fileType',
     },

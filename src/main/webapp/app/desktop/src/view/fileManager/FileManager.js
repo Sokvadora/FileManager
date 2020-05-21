@@ -17,7 +17,7 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                 xtype: 'panel',
                 layout: 'column',
                 width: 457,
-                height: 390,
+                height: 380,
                 items: [
                     {xtype: 'fileEditForm'},
                 ]
@@ -25,7 +25,7 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                 {
                     xtype: 'panel',
                     width: 457,
-                    height: 60,
+                    height: 70,
 
                     bind: {
                         html: '<table>\n' +
