@@ -17,6 +17,7 @@ public class UpdateFileDTO {
     private String info;
     private String author;
     private String href;
+    private String shortName;
 
     @JsonIgnore
     private String editedAt = new SimpleDateFormat("dd.MM.yyyy HH:mm")

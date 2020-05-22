@@ -30,7 +30,6 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         dataIndex: 'name',
         width: 200,
         sortable: true,
-
     }, {
         text: 'Type',
         width: 90,
@@ -104,9 +103,9 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
             id: 'deleteButton',
             text: 'Delete',
             bind: {
-                text: 'Delete {fileTree.selection.name}',
+                text: 'Delete {fileTree.selection.shortName}',
             },
-            handler: 'deleteButtonClick'
+            handler: 'deleteButtonClick',
         }
     ],
 
@@ -123,9 +122,5 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
 
     listeners: {
         drop: 'changeParentId',
-        // load: function (aa) {
-        //     console.log(this.lookupViewModel())
-        //
-        // }
     }
 });

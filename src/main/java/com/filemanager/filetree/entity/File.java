@@ -64,6 +64,10 @@ public class File implements Serializable {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "shortName")
+    private String shortName;
+
+
     @NotNull
     private String createdAt;
 

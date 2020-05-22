@@ -15,7 +15,8 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
             updateFileDTO.href = updateFileDTO.name
         }
 
-        console.log(updateFileDTO)
+         updateFileDTO.shortName = updateFileDTO.name.substr(0, 14)
+
 
         Ext.Ajax.request({
             url: 'file/updateNode',

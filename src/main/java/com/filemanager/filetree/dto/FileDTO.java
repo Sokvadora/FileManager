@@ -31,6 +31,7 @@ public class FileDTO {
     private String size;
     private String parentId;
     private String author;
+    private String shortName;
     private Set<File> children;
 
 

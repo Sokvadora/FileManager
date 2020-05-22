@@ -38,7 +38,7 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                             '    <th>Author</th>\n' +
                             '  </tr>\n' +
                             '  <tr >\n' +
-                            '    <td>{fileTree.selection.name}</td>\n' +
+                            '    <td>{fileTree.selection.shortName}</td>\n' +
                             '    <td>{fileTree.selection.fileType}</td>\n' +
                             '    <td>{fileTree.selection.createdAt}</td>\n' +
                             '    <td>{fileTree.selection.editedAt}</td>\n' +

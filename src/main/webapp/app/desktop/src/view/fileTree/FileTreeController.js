@@ -36,7 +36,8 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             href: '',
             glyph: '',
             name: nameNode,
-            size: ''
+            size: '',
+            shortName: nameNode.substr(0, 14)
         };
 
 
