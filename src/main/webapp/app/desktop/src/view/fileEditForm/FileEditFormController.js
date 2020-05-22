@@ -14,7 +14,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
         if (fileFromStore.get('fileType') === 'link') {
             updateFileDTO.href = updateFileDTO.name
         }
-
+console.log(frm.getForm().getValues())
          updateFileDTO.shortName = updateFileDTO.name.substr(0, 14)
 
 
