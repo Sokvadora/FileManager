@@ -14,24 +14,29 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
         if (fileFromStore.get('fileType') === 'link') {
             updateFileDTO.href = updateFileDTO.name
         }
-console.log(frm.getForm().getValues())
-         updateFileDTO.shortName = updateFileDTO.name.substr(0, 14)
 
 
-        Ext.Ajax.request({
-            url: 'file/updateNode',
-            method: 'POST',
-            params: {id: fileId},
-            jsonData: updateFileDTO,
-            success: function (resp) {
-                let store = Ext.getStore('fileStore')
-                store.reload();
-                frm.reset();
-                console.log('ok')
-            },
-            failure: function () {
-                console.log('Error');
-            }
-        });
+        if (updateFileDTO.name.trim() !== '') {
+            console.log(frm.getForm().getValues())
+            updateFileDTO.shortName = updateFileDTO.name.substr(0, 14)
+
+            Ext.Ajax.request({
+                url: 'file/updateNode',
+                method: 'POST',
+                params: {id: fileId},
+                jsonData: updateFileDTO,
+                success: function (resp) {
+                    let store = Ext.getStore('fileStore')
+                    store.reload();
+                    frm.reset();
+                    console.log('ok')
+                },
+                failure: function () {
+                    console.log('Error');
+                }
+            });
+        }
+
+
     }
 })
