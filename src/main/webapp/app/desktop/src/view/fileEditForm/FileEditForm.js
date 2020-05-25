@@ -75,7 +75,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
     buttons: [{
         text: 'Update',
         itemId: 'update-btn',
-       // disabled:false,
+       disabled:true,
         formBind: true,
         handler: 'updateNode'
     }]

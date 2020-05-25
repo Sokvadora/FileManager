@@ -203,7 +203,8 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             fileInfoName.enable()
             fileInfoAuthor.enable()
 
-        } else if (selectedNode.data.root === 'true') {
+        } else if (selectedNode.data.root === true) {
+
             buttonAdd.enable()
             fileInfoTextarea.disable()
             fileInfoName.disable()
