@@ -2,7 +2,6 @@ package com.filemanager.filetree.service;
 
 
 import com.filemanager.filetree.entity.File;
-import com.filemanager.filetree.mappers.FileMapper;
 import com.filemanager.filetree.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +12,6 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileRepository fileRepository;
-
-    private FileMapper fileMapper;
-
 
     public List<File> getAllFiles() {
         return (List<File>) fileRepository.findAll();

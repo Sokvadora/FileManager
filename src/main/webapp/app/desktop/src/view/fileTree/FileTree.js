@@ -16,12 +16,12 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
     viewConfig: {
         markDirty: false,
         id: 'configDataPanelsView',
-        plugins:
-            {
-                ptype: 'treeviewdragdrop',
-                containerScroll: true,
-
+        plugins: {
+            treeviewdragdrop: {
+                containerScroll: true
             }
+        }
+
     },
 
     columns: [{
@@ -63,7 +63,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         name: 'nameNode',
         enableKeyEvents: true,
         width: 100,
-        maskRe: /[^\s*$]/,
+        maskRe: /^[^\%/\\&\?\{\}\[\]\,\<\>\'\;:!-+!@#\$\^*)(]$/,
         allowBlank: false,
         listeners: {
             keydown: 'bbarKeydown'
@@ -73,6 +73,7 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
             xtype: 'combobox',
             itemId: 'fileTypeCombo',
             reference: 'fileType',
+            allowBlank: false,
             displayField: 'name',
             valueField: 'name',
             value: 'Folder',

@@ -27,6 +27,11 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let target = panel.selModel.getSelection()[0] || panel.getRootNode();
         let nameNode = inputTextField.getValue();
 
+        if (nameNode.trim() == '') {
+           return;
+        }
+
+        console.log( nameNode.trim() !== '')
         let node = {
             mtype: '',
             leaf: '',
@@ -35,9 +40,9 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             fileType: '',
             href: '',
             glyph: '',
-            name: nameNode,
+            name: nameNode.trim(),
             size: '',
-            shortName: nameNode.substr(0, 14)
+            shortName: nameNode.trim().substr(0, 14)
         };
 
 
@@ -114,17 +119,19 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         panel.down('#new-name').focus();
     },
 
-    bbarKeydown: function (inputField, e) {
-        let panel = inputField.up('treepanel');
-        if (e.keyCode === Ext.EventObject.ENTER) {
-            if (!panel.down('#add-button').isDisabled()) {
-                panel.addClick();
+    bbarKeydown:
+        function (inputField, event) {
+            let panel = inputField.up('treepanel');
+            let button = panel.down('#add-button');
+            if (event.keyCode === Ext.EventObject.ENTER) {
+                if (!panel.down('#add-button').isDisabled()) {
+                    this.addButtonClick(button)
+                }
+            } else if (event.keyCode === Ext.EventObject.TAB && event.shiftKey) {
+                event.stopEvent();
+                panel.view.focusRow(panel.selModel.getSelection()[0] || 0);
             }
-        } else if (e.keyCode === Ext.EventObject.TAB && e.shiftKey) {
-            e.stopEvent();
-            panel.view.focusRow(panel.selModel.getSelection()[0] || 0);
-        }
-    },
+        },
 
 
     onExpandAllClick: function () {
@@ -187,12 +194,14 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
     },
 
 
-    changeParentId: function (node, data, overModel, dropPosition) {
+    changeParentId: function (node, data, overModel, dropPosition, record) {
 
         let currentParentId;
         let newParams = new Object();
         let currentFileId = data.records[0].data.id;
         let isRoot = data.records[0].parentNode.data.root;
+
+        console.log(data.records[0])
 
         if (isRoot === false) {
             currentParentId = data.records[0].data.parentId;
@@ -202,7 +211,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let droppedFileDTO = Ext.JSON.encode(newParams);
 
         console.log('id:', currentFileId, 'parent:', currentParentId)
-
+// console.log(record)
         Ext.Ajax.request({
             url: 'file/droppedNode',
             method: 'POST',
@@ -211,7 +220,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             success: function (resp) {
                 let store = Ext.getStore('fileStore')
                 store.reload();
-                console.log(resp)
+                // console.log(resp)
             },
             failure: function (resp) {
                 console.log(resp.responseText);
