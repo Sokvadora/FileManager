@@ -27,11 +27,14 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let target = panel.selModel.getSelection()[0] || panel.getRootNode();
         let nameNode = inputTextField.getValue();
 
+        //     let reg =/^([\s \-a-zа-яё\_+\d]+|\d+)$/i;
+        // || reg.test(nameNode.trim()) === false
+
         if (nameNode.trim() == '') {
-           return;
+            return;
         }
 
-        console.log( nameNode.trim() !== '')
+        //console.log(reg.test(nameNode))
         let node = {
             mtype: '',
             leaf: '',
@@ -161,40 +164,55 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let panel = selModel.view.up('');
         let buttonAdd = panel.down('#add-button');
         let fileInfoEditForm = Ext.ComponentQuery.query("#fileEditForm")[0];
+        let fileInfoName = fileInfoEditForm.down('#infoName');
         let selectedNode;
 
+        let updateButton = fileInfoEditForm.down('#update-btn');
+
+        updateButton.enable()
         buttonAdd.enable()
 
         if (selection.length) {
             selectedNode = selection[0];
 
-            if (selectedNode.data.fileType === 'file') {
-                buttonAdd.disable()
-                fileInfoEditForm.down('#infoTextarea').enable()
+            fileInfoName.setValue(selectedNode.data.name)
 
-            } else if (selectedNode.data.fileType === 'link') {
-                buttonAdd.disable()
-                fileInfoEditForm.down('#infoTextarea').disable()
+            this.selectedType(fileInfoEditForm, selectedNode, buttonAdd, fileInfoName)
 
-            } else if (selectedNode.data.fileType === 'folder') {
-                buttonAdd.enable()
-                fileInfoEditForm.down('#infoTextarea').disable()
-                fileInfoEditForm.down('#update-btn').disable()
-                fileInfoEditForm.down('#infoName').enable()
-                fileInfoEditForm.down('#infoAuthor').enable()
-
-            } else if (selectedNode.data.root === 'true') {
-                buttonAdd.enable()
-                fileInfoEditForm.down('#infoTextarea').disable()
-                fileInfoEditForm.down('#infoName').disable()
-                fileInfoEditForm.down('#infoAuthor').disable()
-                fileInfoEditForm.down('#update-btn').disable()
-            }
         }
     },
 
 
-    changeParentId: function (node, data, overModel, dropPosition, record) {
+    selectedType: function (fileInfoEditForm, selectedNode, buttonAdd, fileInfoName) {
+        let fileInfoTextarea = fileInfoEditForm.down('#infoTextarea');
+        let fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
+        let buttonUpdate = fileInfoEditForm.down('#update-btn');
+
+        if (selectedNode.data.fileType === 'file') {
+            buttonAdd.disable()
+            fileInfoTextarea.enable()
+
+        } else if (selectedNode.data.fileType === 'link') {
+            buttonAdd.disable()
+            fileInfoTextarea.disable()
+
+        } else if (selectedNode.data.fileType === 'folder') {
+            buttonAdd.enable()
+            fileInfoTextarea.disable()
+            //fileInfoEditForm.down('#update-btn').disable()
+            fileInfoName.enable()
+            fileInfoAuthor.enable()
+
+        } else if (selectedNode.data.root === 'true') {
+            buttonAdd.enable()
+            fileInfoTextarea.disable()
+            fileInfoName.disable()
+            fileInfoAuthor.disable()
+            buttonUpdate.disable()
+        }
+    },
+
+    changeParentId: function (node, data, overModel, dropPosition) {
 
         let currentParentId;
         let newParams = new Object();
@@ -211,7 +229,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let droppedFileDTO = Ext.JSON.encode(newParams);
 
         console.log('id:', currentFileId, 'parent:', currentParentId)
-// console.log(record)
+
         Ext.Ajax.request({
             url: 'file/droppedNode',
             method: 'POST',

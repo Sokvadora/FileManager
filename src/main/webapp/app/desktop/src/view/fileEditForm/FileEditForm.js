@@ -50,7 +50,9 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 fieldLabel: 'Name',
                 name: 'name',
                 emptyText: 'name file',
-                maskRe: /[^\s*$]/,
+                //maskRe: /[^\s*$]/,
+                regex: /^([\s \-a-zа-яё\_\/\\\-\.\:\&\?\=\#\+\%\@+\d]+|\d+)$/i,
+                invalidText: 'Not a valid text.  Can only contain letters, numbers and the  valid link.',
                 bind: {
                     emptyText: '{fileTree.selection.name}'
                 }
@@ -59,6 +61,8 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 fieldLabel: 'Author',
                 itemId: 'infoAuthor',
                 name: 'author',
+                regex: /^([\s \-a-zа-яё\_+\d]+|\d+)$/i,
+                invalidText: 'Not a valid text.  Can only contain letters, numbers and the symbol "_".',
                 emptyText: 'name author',
                 bind: {
                     emptyText: '{fileTree.selection.author}',
@@ -71,7 +75,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
     buttons: [{
         text: 'Update',
         itemId: 'update-btn',
-        disabled: true,
+       // disabled:false,
         formBind: true,
         handler: 'updateNode'
     }]

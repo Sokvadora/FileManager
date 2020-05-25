@@ -63,7 +63,8 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         name: 'nameNode',
         enableKeyEvents: true,
         width: 100,
-        maskRe: /^[^\%/\\&\?\{\}\[\]\,\<\>\'\;:!-+!@#\$\^*)(]$/,
+        regex: /^([\s \-a-zа-яё\_\/\\\-\.\:\&\?\=\#\+\%\@+\d]+|\d+)$/i,
+        invalidText: 'Not a valid text.  Can only contain letters, numbers and the  valid link.',
         allowBlank: false,
         listeners: {
             keydown: 'bbarKeydown'
