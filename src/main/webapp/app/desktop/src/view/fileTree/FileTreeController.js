@@ -34,7 +34,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             return;
         }
 
-        //console.log(reg.test(nameNode))
         let node = {
             mtype: '',
             leaf: '',
@@ -51,12 +50,16 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
         if (nameNode) {
 
-            if (!panel.getRootNode().findChild('name', nameNode)) {
+            //if (!panel.getRootNode().findChild('name', nameNode)) {
+            if (!target.findChild('name', nameNode)) {
                 this.createNode(target, node, nameNode, panel);
             } else {
                 Ext.Msg.alert('Error', 'A node with this name already exists.');
                 return;
             }
+
+
+            console.log(target.findChild('name', nameNode))
 
             let obj = Ext.JSON.encode(node);
 
