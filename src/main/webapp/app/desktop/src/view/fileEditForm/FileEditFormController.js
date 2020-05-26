@@ -19,6 +19,8 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
         if (updateFileDTO.name.trim() !== '') {
             console.log(frm.getForm().getValues())
             updateFileDTO.shortName = updateFileDTO.name.substr(0, 14)
+            updateFileDTO.name = updateFileDTO.name.trim();
+            updateFileDTO.author = updateFileDTO.author.trim();
 
             Ext.Ajax.request({
                 url: 'file/updateNode',

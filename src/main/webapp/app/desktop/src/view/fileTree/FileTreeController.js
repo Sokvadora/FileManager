@@ -165,6 +165,8 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let buttonAdd = panel.down('#add-button');
         let fileInfoEditForm = Ext.ComponentQuery.query("#fileEditForm")[0];
         let fileInfoName = fileInfoEditForm.down('#infoName');
+        let fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
+        let fileInfoTextarea = fileInfoEditForm.down('#infoTextarea');
         let selectedNode;
 
         let updateButton = fileInfoEditForm.down('#update-btn');
@@ -176,15 +178,17 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             selectedNode = selection[0];
 
             fileInfoName.setValue(selectedNode.data.name)
+            fileInfoAuthor.setValue(selectedNode.data.author)
+            fileInfoTextarea.setValue(selectedNode.data.info)
 
-            this.selectedType(fileInfoEditForm, selectedNode, buttonAdd, fileInfoName)
+            this.selectedType(fileInfoEditForm, selectedNode, buttonAdd, fileInfoName,fileInfoTextarea )
 
         }
     },
 
 
-    selectedType: function (fileInfoEditForm, selectedNode, buttonAdd, fileInfoName) {
-        let fileInfoTextarea = fileInfoEditForm.down('#infoTextarea');
+    selectedType: function (fileInfoEditForm, selectedNode, buttonAdd, fileInfoName, fileInfoTextarea) {
+
         let fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
         let buttonUpdate = fileInfoEditForm.down('#update-btn');
 
