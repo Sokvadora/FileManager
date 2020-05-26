@@ -10,6 +10,15 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
         let fileFromStore = Ext.getStore('fileStore').getAt(selectedFileAtr);
         let fileId = fileFromStore.get('id')
         let updateFileDTO = frm.getForm().getValues();
+        let panel = Ext.ComponentQuery.query('treepanel')[0];
+        let target = panel.selModel.getSelection()[0] || panel.getRootNode();
+
+
+        if (target.parentNode.findChild('name', updateFileDTO.name.trim())) {
+            Ext.Msg.alert('Error', 'A node with this name already exists.');
+            return;
+        }
+
 
         if (fileFromStore.get('fileType') === 'link') {
             updateFileDTO.href = updateFileDTO.name
