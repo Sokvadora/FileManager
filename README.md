@@ -1,5 +1,5 @@
 # FileManager
-Sencha Ext.js + Java Spring boot 
+Sencha Ext.js + Java Spring boot + H2 database
 ***
 Before start:   
 
