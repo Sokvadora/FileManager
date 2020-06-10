@@ -20,7 +20,7 @@ public interface FileService {
     void deleteFileById(Long id);
 
 
-    File updateFileByParentId(Long id, File fileToUpdate);
+    File updateFileByParentId(Long id, String fileToUpdate);
 
 
 }

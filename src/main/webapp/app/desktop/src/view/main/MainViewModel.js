@@ -19,11 +19,21 @@ Ext.define('MeExtApp.view.main.MainViewModel', {
             parentIdProperty: 'parentId',
             autoLoad: true,
             //autoSync: true,
-            root: {
-                id: 0,
-                expanded: false
-            },
+            // root: {
+            //     id: 'root',
+            //     expanded: true
+            // },
         }
-    }
+    },
+    // formulas: {
+    //     // fio: {
+    //     //     bind: {
+    //     //         bindTo: '{person}'
+    //     //     },
+    //         get: function (get) {
+    //             console.log(get)
+    //         }
+    //     },
+
 
 });

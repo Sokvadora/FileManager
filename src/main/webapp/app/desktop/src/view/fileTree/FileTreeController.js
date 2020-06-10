@@ -27,10 +27,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let target = panel.selModel.getSelection()[0] || panel.getRootNode();
         let nameNode = inputTextField.getValue();
 
-        //     let reg =/^([\s \-a-zа-яё\_+\d]+|\d+)$/i;
-        // || reg.test(nameNode.trim()) === false
-
-        if (nameNode.trim() == '') {
+        if (nameNode.trim() === '') {
             return;
         }
 
@@ -58,9 +55,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                 return;
             }
 
-
-            console.log(target.findChild('name', nameNode))
-
             let obj = Ext.JSON.encode(node);
 
             Ext.Ajax.request({
@@ -71,7 +65,25 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                     let store = panel.getStore();
                     console.log('ok')
                     inputTextField.reset();
-                    store.reload();
+                    //store.load();
+
+                    // let store = Ext.getStore('fileStore')
+
+                    store.load({
+
+                        callback: function (store, records) {
+
+
+                            console.log(target)
+
+                            // panel.getRootNode().findChild().expand();
+                            // //target.findChild('name', nameNode).expand();
+                            panel.expandAll() //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            // target.expand(true);
+                            // console.log( target)
+                        }
+                    })
+
                 },
                 failure: function () {
                     console.log('Error');
@@ -184,7 +196,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             fileInfoAuthor.setValue(selectedNode.data.author)
             fileInfoTextarea.setValue(selectedNode.data.info)
 
-            this.selectedType(fileInfoEditForm, selectedNode, buttonAdd, fileInfoName,fileInfoTextarea )
+            this.selectedType(fileInfoEditForm, selectedNode, buttonAdd, fileInfoName, fileInfoTextarea)
 
         }
     },
@@ -224,25 +236,29 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
         let currentParentId;
         let newParams = new Object();
-        let currentFileId = data.records[0].data.id;
+       // let currentFileId = data.records[0].data.id;
         let isRoot = data.records[0].parentNode.data.root;
+let fileToDrop = new Object();
+        console.log('ROOT',data.records[0].parentNode.data)
 
-        console.log(data.records[0])
+        // if (isRoot === false) {
+        //     currentParentId = data.records[0].data.parentId;
+        //     newParams = {parentId: currentParentId};
+        // }
 
-        if (isRoot === false) {
-            currentParentId = data.records[0].data.parentId;
-            newParams = {parentId: currentParentId};
+        if (!isRoot) {
+            fileToDrop = {
+                id: data.records[0].data.id,
+                parentFile: data.records[0].data.parentId
+            }
+        } else {
+            fileToDrop = { id: data.records[0].data.id}
         }
-
-        let droppedFileDTO = Ext.JSON.encode(newParams);
-
-        console.log('id:', currentFileId, 'parent:', currentParentId)
 
         Ext.Ajax.request({
             url: 'file/droppedNode',
-            method: 'POST',
-            params: {id: currentFileId},
-            jsonData: droppedFileDTO,
+            method: 'PUT',
+            params: fileToDrop,
             success: function (resp) {
                 let store = Ext.getStore('fileStore')
                 store.reload();
@@ -252,7 +268,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                 console.log(resp.responseText);
             }
         });
-
     },
 
 })

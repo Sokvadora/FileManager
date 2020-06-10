@@ -4,8 +4,10 @@ package com.filemanager.filetree.entity;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+//import org.joda.time.LocalDateTime;
 import org.springframework.lang.Nullable;
 
+import java.time.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -38,7 +40,7 @@ public class File implements Serializable {
     private Boolean leaf;
 
 
-   @Column(name = "info", length = 500)
+    @Column(name = "info", length = 500)
     private String info;
 
     @Column(name = "fileType")
@@ -67,14 +69,12 @@ public class File implements Serializable {
     @Column(name = "shortName")
     private String shortName;
 
+    //    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private LocalDateTime createdAt;
 
     @NotNull
-    private String createdAt;
-
-    @NotNull
-    private String editedAt;
-
-
+    private LocalDateTime editedAt;
 }
 
 

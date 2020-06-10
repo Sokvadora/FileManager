@@ -1,0 +1,27 @@
+POST http://{{host}}:8081/file
+Content-Type: application/json; charset=UTF-8
+
+{
+  "id": "2",
+  "name": "ssssss"
+}
+
+###
+PUT http://{{host}}:8081/file/droppedNode
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+   id=1
+
+
+###
+
+GET http://{{host}}:8081/file
+Content-Type: application/json; charset=UTF-8
+
+###
+
+GET http://{{host}}:8081/file/1
+
+###
+
+

@@ -37,6 +37,11 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         dataIndex: 'fileType',
     },
 
+        // {
+        //     text: 'Last update',
+        //     dataIndex: 'editedAt',
+        //     width: 130,
+        // },
         {
             text: 'Last update',
             dataIndex: 'editedAt',

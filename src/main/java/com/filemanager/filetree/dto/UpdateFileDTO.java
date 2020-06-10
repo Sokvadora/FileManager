@@ -3,9 +3,8 @@ package com.filemanager.filetree.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Calendar;
+
 
 @Getter
 @Setter
@@ -20,6 +19,5 @@ public class UpdateFileDTO {
     private String shortName;
 
     @JsonIgnore
-    private String editedAt = new SimpleDateFormat("dd.MM.yyyy HH:mm")
-            .format(Calendar.getInstance().getTime());
+    private LocalDateTime editedAt  = LocalDateTime.now();
 }
