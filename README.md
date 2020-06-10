@@ -9,6 +9,7 @@ in 'webapp' directory:
 - run spring boot app
 
 ***
-#### Database H2  http://localhost:8080/h2-console
+#### Database H2  http://localhost:8081/h2-console
+The application run on port ` 8081`
 
-` you can change the port in the  application.properties`
+` you can change the port in the  application.yml`
