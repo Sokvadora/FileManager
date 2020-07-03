@@ -21,13 +21,15 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
     },
 
+
     addButtonClick: function (button) {
         let panel = button.up('treepanel');
         let inputTextField = panel.down('#new-name');
         let target = panel.selModel.getSelection()[0] || panel.getRootNode();
-        let nameNode = inputTextField.getValue();
+        let nameNode = inputTextField.getValue().trim();
 
-        if (nameNode.trim() === '') {
+        if (Ext.isEmpty(nameNode)) {
+            Ext.Msg.alert('System message', 'Please enter the file name');
             return;
         }
 
@@ -35,19 +37,17 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             mtype: '',
             leaf: '',
             parentId: '',
-            infoNode: '',
+            info: '',
             fileType: '',
             href: '',
             glyph: '',
-            name: nameNode.trim(),
+            name: nameNode,
             size: '',
-            shortName: nameNode.trim().substr(0, 14)
+            shortName: nameNode.substr(0, 14),
         };
-
 
         if (nameNode) {
 
-            //if (!panel.getRootNode().findChild('name', nameNode)) {
             if (!target.findChild('name', nameNode)) {
                 this.createNode(target, node, nameNode, panel);
             } else {
@@ -61,40 +61,28 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                 url: 'file',
                 method: 'POST',
                 jsonData: obj,
-                success: function () {
+                success: function (response) {
                     let store = panel.getStore();
                     console.log('ok')
                     inputTextField.reset();
-                    //store.load();
-
-                    // let store = Ext.getStore('fileStore')
-
                     store.load({
-
                         callback: function (store, records) {
-
-
-                            console.log(target)
-
-                            // panel.getRootNode().findChild().expand();
-                            // //target.findChild('name', nameNode).expand();
-                            panel.expandAll() //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                            // target.expand(true);
-                            // console.log( target)
+                            let newItemId = panel.getViewModel().get('itemId');
+                            let itemFromStore = Ext.getStore('fileStore').getNodeById(newItemId);
+                            if (itemFromStore) {
+                                itemFromStore.expand();
+                            }
                         }
                     })
-
                 },
                 failure: function () {
                     console.log('Error');
                 }
             });
-
         }
     },
 
     createNode: function (target, node, nameNode, panel) {
-
         let selectedType = panel.down('#fileTypeCombo').value;
 
         target.isRoot() ? node.parentId = null : node.parentId = target.data.id;
@@ -105,11 +93,11 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             node.href = '';
             node.glyph = '';
             node.leaf = false;
-            node.infoNode = `You can't change this file`;
+            node.info = `You can't change this file`;
         } else if (selectedType === 'File') {
             node.leaf = true;
             node.mtype = 'File';
-            node.infoNode = 'New file';
+            node.info = 'New file';
             node.fileType = 'file';
             node.href = '';
             node.glyph = '';
@@ -118,7 +106,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             node.leaf = true;
             node.mtype = 'Href';
             node.fileType = 'link';
-            node.infoNode = `You can't change this file`;
+            node.info = `You can't change this file`;
             node.href = nameNode;
             node.glyph = 'glyphicon-globe';
         }
@@ -128,9 +116,8 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
     selectionchange: function (selModel, selection) {
         let panel = selModel.view.up('');
         panel.onSelectionChange.apply(panel, arguments);
-
-
     },
+
 
     panelOnKeyEnter: function () {
         let panel = this.view.up('');
@@ -176,75 +163,71 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
 
     onSelectionChange: function (selModel, selection) {
-        let panel = selModel.view.up('');
-        let buttonAdd = panel.down('#add-button');
-        let fileInfoEditForm = Ext.ComponentQuery.query("#fileEditForm")[0];
-        let fileInfoName = fileInfoEditForm.down('#infoName');
-        let fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
-        let fileInfoTextarea = fileInfoEditForm.down('#infoTextarea');
-        let selectedNode;
+        const fileInfoEditForm = Ext.ComponentQuery.query("#fileEditForm")[0];
+        const fileManagerForm = Ext.ComponentQuery.query("#fileManager")[0];
 
-        let updateButton = fileInfoEditForm.down('#update-btn');
+        if (!Ext.isEmpty(selection)) {
+            let item = selection[0].getData();
+            fileInfoEditForm.getController().doInit(item);
+            fileManagerForm.getController().doInit(item);
+            this.doInit(item.id)
+        }
 
-        updateButton.enable()
-        buttonAdd.enable()
+        const panel = selModel.view.up('');
+        const buttonAdd = panel.down('#add-button');
+        buttonAdd.enable();
 
         if (selection.length) {
-            selectedNode = selection[0];
 
-            fileInfoName.setValue(selectedNode.data.name)
-            fileInfoAuthor.setValue(selectedNode.data.author)
-            fileInfoTextarea.setValue(selectedNode.data.info)
+            let fileInfoName = fileInfoEditForm.down('#infoName');
+            let fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
+            let fileInfoTextarea = fileInfoEditForm.down('#infoTextarea');
+            let selectedNode = selection[0];
 
-            this.selectedType(fileInfoEditForm, selectedNode, buttonAdd, fileInfoName, fileInfoTextarea)
-
+            fileInfoName.setValue(selectedNode.data.name);
+            fileInfoAuthor.setValue(selectedNode.data.author);
+            fileInfoTextarea.setValue(selectedNode.data.info);
+            this.selectedType(panel, selectedNode)
+        } else {
+            this.isDisabled(false, true, true, true, true)
         }
+
     },
 
-
-    selectedType: function (fileInfoEditForm, selectedNode, buttonAdd, fileInfoName, fileInfoTextarea) {
-
-        let fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
-        let buttonUpdate = fileInfoEditForm.down('#update-btn');
+    selectedType: function (panel, selectedNode) {
 
         if (selectedNode.data.fileType === 'file') {
-            buttonAdd.disable()
-            fileInfoTextarea.enable()
-
+            this.isDisabled(true, false, false, false, false)
         } else if (selectedNode.data.fileType === 'link') {
-            buttonAdd.disable()
-            fileInfoTextarea.disable()
-
+            this.isDisabled(true, true, false, false, false)
         } else if (selectedNode.data.fileType === 'folder') {
-            buttonAdd.enable()
-            fileInfoTextarea.disable()
-            //fileInfoEditForm.down('#update-btn').disable()
-            fileInfoName.enable()
-            fileInfoAuthor.enable()
-
-        } else if (selectedNode.data.root === true) {
-
-            buttonAdd.enable()
-            fileInfoTextarea.disable()
-            fileInfoName.disable()
-            fileInfoAuthor.disable()
-            buttonUpdate.disable()
+            this.isDisabled(false, true, false, false, false)
+        } else {
+            this.isDisabled(false, true, true, true, true)
         }
     },
+
+    isDisabled: function (add, info, author, name, update) {
+        const panel = this.getView();
+        const buttonAdd = panel.down('#add-button');
+        const fileInfoEditForm = Ext.ComponentQuery.query("#fileEditForm")[0];
+        const buttonUpdate = fileInfoEditForm.down('#update-btn');
+        const fileInfoName = fileInfoEditForm.down('#infoName');
+        const fileInfoAuthor = fileInfoEditForm.down('#infoAuthor');
+        const fileInfoTextarea = fileInfoEditForm.down('#infoTextarea');
+
+        buttonAdd.setDisabled(add);
+        fileInfoTextarea.setDisabled(info);
+        fileInfoAuthor.setDisabled(author);
+        fileInfoName.setDisabled(name);
+        buttonUpdate.setDisabled(update);
+    },
+
 
     changeParentId: function (node, data, overModel, dropPosition) {
 
-        let currentParentId;
-        let newParams = new Object();
-       // let currentFileId = data.records[0].data.id;
         let isRoot = data.records[0].parentNode.data.root;
-let fileToDrop = new Object();
-        console.log('ROOT',data.records[0].parentNode.data)
-
-        // if (isRoot === false) {
-        //     currentParentId = data.records[0].data.parentId;
-        //     newParams = {parentId: currentParentId};
-        // }
+        let fileToDrop;
 
         if (!isRoot) {
             fileToDrop = {
@@ -252,7 +235,9 @@ let fileToDrop = new Object();
                 parentFile: data.records[0].data.parentId
             }
         } else {
-            fileToDrop = { id: data.records[0].data.id}
+            fileToDrop = {
+                id: data.records[0].data.id
+            }
         }
 
         Ext.Ajax.request({
@@ -260,14 +245,26 @@ let fileToDrop = new Object();
             method: 'PUT',
             params: fileToDrop,
             success: function (resp) {
-                let store = Ext.getStore('fileStore')
-                store.reload();
-                // console.log(resp)
+                let store = Ext.getStore('fileStore');
+                store.load({
+                    callback: function (store, records) {
+                        Ext.getStore('fileStore').getNodeById(fileToDrop.id).expand()
+                    }
+                });
             },
             failure: function (resp) {
                 console.log(resp.responseText);
             }
         });
     },
+
+
+    init: function (view) {
+        view.doInit = this.doInit.bind(this);
+    },
+
+    doInit: function (itemId) {
+        this.getViewModel().set('itemId', itemId)
+    }
 
 })

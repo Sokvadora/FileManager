@@ -9,5 +9,12 @@ Ext.define('MeExtApp.view.main.MainView', {
 
     layout: 'center',
     items: {xtype: 'filemanager'}
+    // items:{
+    //     layout: 'hbox',
+    //     items: [
+    //         {xtype: 'fileTree'},
+    //         {xtype: 'fileTree'}
+    //     ]
+    // }
 });
 

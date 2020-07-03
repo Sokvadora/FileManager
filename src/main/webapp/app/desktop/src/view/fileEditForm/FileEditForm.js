@@ -2,6 +2,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
     requires: ['MeExtApp.view.fileEditForm.FileEditFormController'],
     extend: 'Ext.form.Panel',
     xtype: 'fileEditForm',
+    reference: 'fileEditForm',
     itemId: 'fileEditForm',
     controller: 'FileEditFormController',
     frame: true,
@@ -10,19 +11,23 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
     width: 458,
     height: 385,
 
+    viewModel: {
+        type: 'fileeditformviewmodel'
+    },
+
+
     fieldDefaults: {
         labelAlign: "right",
         labelWidth: 50,
         msgTarget: 'side',
     },
 
-
     items: [{
         xtype: 'fieldset',
         itemId: 'fileInfo',
         title: 'File Info',
         bind: {
-            title: '{fileTree.selection.name}',
+            title: '{selectedItem.shortName}',
         },
         defaultType: 'textfield',
         defaults: {
@@ -37,9 +42,10 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 name: 'info',
                 emptyText: 'Select the file to view the information',
                 maxLength: 500,
+                disabled: true,
                 bind: {
-                    emptyText: '{fileTree.selection.info}',
-                    value: '{fileTree.selection.info}'
+                    emptyText: '{selectedItem.info}',
+                    value: '{selectedItem.info}'
                 },
                 width: 50,
                 height: 170,
@@ -50,33 +56,38 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditForm', {
                 fieldLabel: 'Name',
                 name: 'name',
                 emptyText: 'name file',
+                disabled: true,
                 //maskRe: /[^\s*$]/,
                 regex: /^([\s \-a-zа-яё\_\/\\\-\.\:\&\?\=\#\+\%\@+\d]+|\d+)$/i,
                 invalidText: 'Not a valid text.  Can only contain letters, numbers and the  valid link.',
                 bind: {
-                    emptyText: '{fileTree.selection.name}'
+                    emptyText: '{doc.name}',
                 }
             },
             {
                 fieldLabel: 'Author',
                 itemId: 'infoAuthor',
                 name: 'author',
+                disabled: true,
                 regex: /^([\s \-a-zа-яё\_+\d]+|\d+)$/i,
                 invalidText: 'Not a valid text.  Can only contain letters, numbers and the symbol "_".',
                 emptyText: 'name author',
                 bind: {
-                    emptyText: '{fileTree.selection.author}',
+                    emptyText: '{selectedItem.author}',
                 }
             },
 
         ]
-    },],
+    },
+
+    ],
 
     buttons: [{
         text: 'Update',
         itemId: 'update-btn',
-       disabled:true,
+        disabled: true,
         formBind: true,
         handler: 'updateNode'
-    }]
+    }],
+
 });

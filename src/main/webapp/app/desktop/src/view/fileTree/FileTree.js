@@ -2,6 +2,10 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
     extend: 'Ext.tree.Panel',
     requires: ['MeExtApp.view.fileTree.FileTreeController'],
     xtype: 'fileTree',
+
+    viewModel: {
+        type: 'filetreeviewmodel'
+    },
     bind: {
         store: '{treeStore}',
     },
@@ -12,16 +16,21 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
     height: 450,
     reserveScrollbar: true,
 
+    twoWayBindable: {
+        document: true
+    },
+
+    config: {
+        document: {}
+    },
 
     viewConfig: {
         markDirty: false,
-        id: 'configDataPanelsView',
         plugins: {
             treeviewdragdrop: {
                 containerScroll: true
             }
         }
-
     },
 
     columns: [{
@@ -107,7 +116,6 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         },
         {
             itemId: 'delete-button',
-            id: 'deleteButton',
             text: 'Delete',
             bind: {
                 text: 'Delete {fileTree.selection.shortName}',
@@ -129,5 +137,6 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
 
     listeners: {
         drop: 'changeParentId',
+
     }
 });
