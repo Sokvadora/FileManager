@@ -66,12 +66,14 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                     console.log('ok')
                     inputTextField.reset();
                     store.load({
-                        callback: function (store, records) {
+                        callback: function (records) {
                             let newItemId = panel.getViewModel().get('itemId');
                             let itemFromStore = Ext.getStore('fileStore').getNodeById(newItemId);
                             if (itemFromStore) {
                                 itemFromStore.expand();
                             }
+                            let i = records.length - 1;
+                            panel.getSelectionModel().select(store.indexOf(records[i]))
                         }
                     })
                 },
@@ -191,7 +193,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         } else {
             this.isDisabled(false, true, true, true, true)
         }
-
     },
 
     selectedType: function (panel, selectedNode) {
@@ -225,9 +226,11 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
 
 
     changeParentId: function (node, data, overModel, dropPosition) {
+//TODO: same name for dropped file?
 
         let isRoot = data.records[0].parentNode.data.root;
         let fileToDrop;
+        const me = this;
 
         if (!isRoot) {
             fileToDrop = {
@@ -247,8 +250,13 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             success: function (resp) {
                 let store = Ext.getStore('fileStore');
                 store.load({
-                    callback: function (store, records) {
-                        Ext.getStore('fileStore').getNodeById(fileToDrop.id).expand()
+                    callback: function () {
+                        const node = store.getNodeById(fileToDrop.id);
+                        if (node.parentNode) {
+                            node.parentNode.expand()
+                        }
+                        const panel = me.getView('treePanel');
+                        panel.getSelectionModel().select(store.indexOf(node))
                     }
                 });
             },
@@ -267,4 +275,4 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         this.getViewModel().set('itemId', itemId)
     }
 
-})
+});

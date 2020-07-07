@@ -34,10 +34,11 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
                     let store = Ext.getStore('fileStore');
                     console.log('ok');
                     store.load({
-                        callback: function () {
+                        callback: function (records) {
                             let item = Ext.getStore('fileStore').getNodeById(selectedItem.id);
                             console.log(item);
                             item.parentNode.expand();
+                            panel.getSelectionModel().select(store.indexOf(item ))
                         }
                     })
                 },

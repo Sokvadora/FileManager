@@ -24,6 +24,7 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                     {
                         xtype: 'fileEditForm',
                         flex: 1,
+
                     },
 
                     {
