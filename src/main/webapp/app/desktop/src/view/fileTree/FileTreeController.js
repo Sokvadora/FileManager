@@ -15,7 +15,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
                 store.reload();
             },
             failure: function () {
-                console.log('Error');
+                Ext.Msg.alert('System message', 'It is nothing to delete');
             }
         });
 
@@ -27,7 +27,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         let inputTextField = panel.down('#new-name');
         let target = panel.selModel.getSelection()[0] || panel.getRootNode();
         let nameNode = inputTextField.getValue().trim();
-
+        console.log(this.getViewModel())
         if (Ext.isEmpty(nameNode)) {
             Ext.Msg.alert('System message', 'Please enter the file name');
             return;
@@ -43,7 +43,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
             glyph: '',
             name: nameNode,
             size: '',
-            shortName: nameNode.substr(0, 14),
+            shortName: nameNode.substr(0, 9),
         };
 
         if (nameNode) {
@@ -178,7 +178,6 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
         const panel = selModel.view.up('');
         const buttonAdd = panel.down('#add-button');
         buttonAdd.enable();
-
         if (selection.length) {
 
             let fileInfoName = fileInfoEditForm.down('#infoName');
@@ -272,7 +271,7 @@ Ext.define('MeExtApp.view.fileTree.FileTreeController', {
     },
 
     doInit: function (itemId) {
-        this.getViewModel().set('itemId', itemId)
+        this.getViewModel().set('itemId', itemId);
     }
 
 });

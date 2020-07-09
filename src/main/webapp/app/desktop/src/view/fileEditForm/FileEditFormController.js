@@ -21,7 +21,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
         }
 
         if (!Ext.isEmpty(updateFileDTO.name.trim())) {
-            updateFileDTO.shortName = updateFileDTO.name.substr(0, 14)
+            updateFileDTO.shortName = updateFileDTO.name.substr(0, 9)
             updateFileDTO.name = updateFileDTO.name.trim();
             updateFileDTO.author = updateFileDTO.author.trim();
 
@@ -36,9 +36,13 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
                     store.load({
                         callback: function (records) {
                             let item = Ext.getStore('fileStore').getNodeById(selectedItem.id);
-                            console.log(item);
-                            item.parentNode.expand();
-                            panel.getSelectionModel().select(store.indexOf(item ))
+                            const fileManagerForm = Ext.ComponentQuery.query("#fileManager")[0];
+                            if (item) {
+                                fileManagerForm.getController().doInit(item.data);
+                                item.parentNode.expand();
+                                panel.getSelectionModel().select(store.indexOf(item ))
+                            }
+
                         }
                     })
                 },
@@ -54,7 +58,7 @@ Ext.define('MeExtApp.view.fileEditForm.FileEditFormController', {
     },
 
     doInit: function (item) {
-        this.getViewModel().set('selectedItem', item)
+        this.getViewModel().set('selectedItem', item);
     }
 
 });

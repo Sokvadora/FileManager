@@ -45,15 +45,12 @@ Ext.define('MeExtApp.view.fileTree.FileTree', {
         sortable: true,
         dataIndex: 'fileType',
     },
-
-        // {
-        //     text: 'Last update',
-        //     dataIndex: 'editedAt',
-        //     width: 130,
-        // },
         {
             text: 'Last update',
             dataIndex: 'editedAt',
+            renderer: function(value) {
+                return value ? Ext.Date.format(Ext.Date.parse(value, 'Y-m-dTH:i:s.u'), 'd.m.y в H:i:s'): value;
+            },
             width: 130,
         },
         {

@@ -7,6 +7,6 @@ Ext.define('MeExtApp.view.fileManager.FileManagerController', {
     },
 
     doInit: function (item) {
-        this.getViewModel().set('documentSelected', item)
+        this.getViewModel().set('documentSelected', item);
     }
 });

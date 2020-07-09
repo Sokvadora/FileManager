@@ -1,10 +1,8 @@
 package com.filemanager.filetree.entity;
 
-
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-//import org.joda.time.LocalDateTime;
 import org.springframework.lang.Nullable;
 
 import java.time.*;
@@ -68,7 +66,6 @@ public class File implements Serializable {
     @Column(name = "shortName")
     private String shortName;
 
-    //    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private LocalDateTime createdAt;
 

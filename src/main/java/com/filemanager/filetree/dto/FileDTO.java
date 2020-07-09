@@ -21,7 +21,6 @@ public class FileDTO<formatter> {
     private Boolean leaf;
     private String groupId;
     private String info;
-    private String fdate;
     private String fileType;
     private String href;
     private String glyph;
@@ -31,10 +30,10 @@ public class FileDTO<formatter> {
     private String shortName;
     private Set<File> children;
 
-    @JsonIgnore
+   // @JsonIgnore
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @JsonIgnore
+    //@JsonIgnore
     private LocalDateTime editedAt  = LocalDateTime.now();
 
 }

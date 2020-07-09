@@ -44,8 +44,8 @@ Ext.define('MeExtApp.view.fileManager.FileManager', {
                                 '</tr> <tr> ' +
                                 '<td>{documentSelected.shortName}</td>' +
                                 '<td>{documentSelected.fileType}</td>' +
-                                '<td> createdAt </td>' +
-                                '<td> editedAt </td>' +
+                                '<td> {createDate} </td>' +
+                                '<td> {editDate}</td>' +
                                 '<td>{documentSelected.size}</td>' +
                                 '<td>{documentSelected.author}</td>' +
                                 '</tr></table>',
